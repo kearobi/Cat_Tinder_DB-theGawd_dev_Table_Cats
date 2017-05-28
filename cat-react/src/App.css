@@ -1,3 +1,7 @@
+form type {
+  align-content: right;
+}
+
 label {
   color: white;
 }
@@ -14,12 +18,19 @@ label {
   color: black;
 }
 
-.panel h3{
-  color: white;
+
+.panel h3 {
+  color: #79FFD1;
+  text-align: center
 }
 
-.App {
-  text-align: center;
+.catHome h3 {
+ color:#79FFD1;
+ text-align: center;
+}
+
+.tablerows {
+  align-content: center;
 }
 
 .App-logo {
@@ -27,16 +38,16 @@ label {
   height: 80px;
 }
 
-.App-header {
+.panel-default {
   background-color: #222;
-  height: 150px;
+  height: 144px;
   padding: -5px;
   color: white;
 }
 
-.App-intro {
+/*.App-intro {
   font-size: large;
-}
+}*/
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

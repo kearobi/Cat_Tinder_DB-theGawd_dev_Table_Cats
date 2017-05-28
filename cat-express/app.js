@@ -12,25 +12,30 @@ app.use(cors())
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
-app.post('/create_cat', function (request, response) {
-  let catParams = request.body.cat
-  //catParams are the inputs from the user when they submit
-  Cat.create(catParams).then(function(cat){
-    response.status(200)
-    response.json({status:'success', cat:cat})
-  }).catch(function(error){
-    response.status(400)
-    response.json({status:'error', error:error})
-  })
- });
 
-app.get('/cat_index', function (request, response) {
+app.get('/', function (request, response) {
+  response.json({message: 'API Example App'})
+});
+
+app.get('/cats', function(request, response){
   Cat.findAll().then(function(cats){
     response.status(200)
-    response.json({status: 'success', cats:cats})
-    console.log(cats)
+    response.json({status: 'success', cats: cats})
   })
-});
+})
+
+app.post('/create_cat', function(request, response){
+  let catParams = request.body.cat
+  Cat.create(catParams).then(function(cat){
+    response.status(200)
+    response.json({status: 'success', cat: cat})
+  }).catch(function(error){
+    response.status(400)
+    response.json({status: 'error', error: error})
+  })
+})
+
+
 
 app.listen(4000, function () {
  console.log('Example app listening on port 4000!');

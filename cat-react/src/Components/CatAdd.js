@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Link, BrowserRouter as Router, Route} from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import { updateCat } from '../CatActions'
+import '../App.css';
 
 class CatAdd extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class CatAdd extends Component {
         habitat: "",
         personality: "",
         age: ""
-      }
+      },
+      message: ''
     }
   }
 
@@ -21,36 +23,47 @@ class CatAdd extends Component {
   //target is where you click/type
   //attribute refers to the name of that input which should match the state field
   handleChange(e){
-    const target = e.target
-    const attribute = target.name
-    this.state.cat[attribute] = target.value
-    this.setState({cat:this.state.cat})
+    let target = e.target
+    let cat = this.state.cat
+    cat[target.name] = target.value
+    this.setState({
+      cat:cat
+    })
   }
 
-  handleSubmit(e, attributes){
-    //the submit button collects all of the data from the inputs and POSTS it to the server via JSON so it must be STRINGIFY-ed
+  handleSubmit(e){
+    var appScope = this
+    e.preventDefault()
+    // set up the headers and request
     const params = {
-      method: "POST",
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state)
     }
-    e.preventDefault()
-    fetch('http://localhost:4000/create_cat', params).then((response)=>{
-
-      //First, check that the response status is 200 (successful) before parsing the response as JSON.
-      if(response.ok){
-        //The response of a fetch() request is a Stream object, which means that when we call the json() method, a Promise is returned since the reading of the stream will happen asynchronously.
-        response.json().then((body)=>{
-
-          //set the state with the parsed JSON
-          this.setState({cat: body.cat})
-          this.props.history.push('/')
-
+    // send state to the backend server
+    fetch("http://localhost:4000/create_cat", params).then(function(response){
+      // if post is successful update the message to be successful
+      // and update the state to equal what we get back from the server
+      if(response.status === 200){
+        response.json().then(function(body){
+          appScope.setState({
+            cat: body.cat,
+            message: 'successfully created cat profile'
+          })
+          updateCat()
         })
-      }else{
-        console.log("error!")
+      } else {
+        this.setState({
+          message: 'error'
+        })
+        // else update the message to say there was a failure
       }
+    }).catch(function(error){
+      this.setState({
+        message: 'there was an error: ' + error.errors.join("\n")
+      })
     })
+
   }
 
   render(){
@@ -63,23 +76,20 @@ class CatAdd extends Component {
                 <h3>Add a Cat</h3>
                 <div className='catHome'>
                   <div className="catLink">
-                  <Link to={`/`}>List Cats</Link>
-                </div>
+                  <Link to={`/`}><h3>List Cats</h3></Link>
+                  </div>
                 </div>
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                  <div className='row'>
-                    <div className='col-xs-12'>
-
-                      <div>
-                        <label>Color</label>
-                        <br />
+                  <div className='row' alt='tablerows'>
+                    <label className='col-sm-2 col-form-label'>Color</label>
+                      <div className='col-xs-12'>
                         <input
                           type='text'
                           name='color'
                           value={this.state.cat.color}
-                          onChange={this.handleChange.bind(this)}
-                        />
+                          onChange={this.handleChange.bind(this)} />
                       </div>
+                    </div>
 
                       <div>
                         <label>Breed</label>
@@ -137,21 +147,19 @@ class CatAdd extends Component {
 
                       <div>
                         <br />
-
                         <input
                           type='submit'
                           value='Submit'
-                          className = 'btn btn-primary' />
-
-                        </div>
+                          className = 'btn btn-primary'
+                        />
                       </div>
-                    </div>
-                  </form>
+                    </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       )
     }
   }

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.3"
+    "cors": "^2.8.3",
+    "sequelize-cli": "^2.7.0"
   }
 }
