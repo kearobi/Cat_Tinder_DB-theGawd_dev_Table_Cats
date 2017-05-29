@@ -4,14 +4,14 @@ import CatAdd from './Components/CatAdd'
 import logo from './logo.svg';
 import './App.css';
 import CatIndex from './Components/CatIndex'
-import { updateCat } from './CatActions'
+import { updateStoreCat } from './CatActions'
 
 
 class App extends Component {
   constructor(props){
     super(props)
 
-    updateCat()
+    updateStoreCat()
 
     }
 
