@@ -4,6 +4,7 @@ import CatAdd from './Components/CatAdd'
 import logo from './logo.svg';
 import './App.css';
 import CatIndex from './Components/CatIndex'
+import UserAdd from './Components/Register'
 import { updateStoreCat } from './CatActions'
 
 
@@ -28,6 +29,7 @@ class App extends Component {
             <div className='center'>
             <Route exact path="/" component={CatIndex} />
             <Route exact path="/add" component={CatAdd} />
+            <Route exact path='/register' component={UserAdd} />
             </div>
           </Router>
           </div>

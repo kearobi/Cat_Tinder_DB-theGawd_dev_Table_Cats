@@ -7,7 +7,7 @@ class CatStore extends EventEmitter{
     super()
     this.cats = {
     }
-  
+
     this.newCat = {}
   }
 //** getCats() is called by CatIndex when setting the state. The store has been updated with a response from the DB and stored that response in an array of objects.
@@ -21,6 +21,7 @@ class CatStore extends EventEmitter{
   }
 
   updateNewCat(attributes){
+//** push the newCat into the index of the all "Cats" in CatIndex
     this.newCat = attributes
     this.emit('change')
   }
@@ -43,7 +44,7 @@ class CatStore extends EventEmitter{
 //** the case of UPDATE_CAT calls the function updateCat(). JS: 27
       this.updateCat(action.cats)
       break
-      }
+    }
       default:{}
     }
   }

@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import {catAdd} from '../CatActions'
+import {userAdd} from '../CatActions'
 
-class CatAdd extends Component {
+class UserAdd extends Component {
   constructor(props) {
     super(props)
     //**(DATA FLOW COMMENTS) :3000/add; this.state.cat holds values for form input. Currently there is nothing stored in the state.
     this.state={
-      cat: {
-        color: "",
-        breed: "",
-        gender: "",
-        habitat: "",
-        personality: "",
-        age: ""
+      user: {
+        first_name: "",
+        last_name: "",
+        user_name: "",
+        email: "",
+        password: ""
       },
-      message: ''
+        message: ''
     }
   }
 
@@ -26,28 +25,21 @@ class CatAdd extends Component {
     //** e.target is the user EVENT(e) of selecting a TARGET ie: 'color', 'breed') of 'cat'.
     let target = e.target
     //** we assight a variable to represent the user input data.
-    let cat = this.state.cat
+    let user = this.state.user
     //** So we have the EVENT(e), TARGET and the variable cat.
     //** cat[target.name]= this.state.cat.age (or .color..)
     //** this.state.cat.age = 4(for example)
-    cat[target.name] = target.value
+    user[target.name] = target.value
     //** this.state.cat.age has an updated VALUE of '4'
     //** We set this.state.cat and render.
     this.setState({
-      cat:cat
-      //** DRAWN OUT:
-      //**color: "",
-      //** breed: "",
-      //** gender: "",
-      //**habitat: "",
-      //** personality: "",
-      //** age: ****"4"*****
+      user: user
     })
   }
 
   handleSubmit(e){
     e.preventDefault()
-      catAdd(this.state.cat)
+      userAdd(this.state.user)
     }
   //**(3) :3000/add; Once the form as been completly filled out the user will click the "SUBMIT" button which will trigger the handleSubmit(e) function.
   //** handleSubmit() reacts to a user event.
@@ -59,74 +51,61 @@ class CatAdd extends Component {
           <div className='col-xs-6 col-xs-offset-3'>
             <div className='panel'>
               <div className='panel-body'>
-                <h3>Add a Cat</h3>
+                <h3>Register User Name and Password</h3>
                 <div className='catHome'>
                   <div className="catLink">
                   <Link to={`/`}><h3>List Cats</h3></Link>
                   </div>
                 </div>
-                <form onSubmit={this.handleSubmit.bind(this)}>
+                <form action='/register' onSubmit={this.handleSubmit.bind(this)}>
                   <div className='row' alt='tablerows'>
-                    <label className='col-sm-2 col-form-label'>Color</label>
+                    <label className='col-sm-2 col-form-label'>First Name</label>
                       <div className='col-xs-12'>
                         <input
                           type='text'
-                          name='color'
-                          value={this.state.cat.color}
+                          name='first_name'
+                          value={this.state.user.firstName}
                           onChange={this.handleChange.bind(this)} />
                       </div>
                     </div>
 
                       <div>
-                        <label>Breed</label>
+                        <label>Last Name</label>
                         <br />
                         <input
                           type='text'
-                          name='breed'
-                          value={this.state.cat.breed}
+                          name='last_name'
+                          value={this.state.user.lastName}
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
 
                       <div>
-                        <label>Gender</label>
+                        <label>User Name</label>
                         <br />
-                        <select name='gender' value={this.state.cat.gender} onChange={this.handleChange.bind(this)}>
-                          <option></option>
-                          <option>Male</option>
-                          <option>Female</option>
-                        </select>
+                        <input name='user_name'
+                          value={this.state.user.userName}
+                          onChange={this.handleChange.bind(this)}>
+                        </input>
                       </div>
 
                       <div>
-                        <label>Habitat</label>
-                        <br />
-                        <select name='habitat' value={this.state.cat.habitat} onChange={this.handleChange.bind(this)}>
-                          <option></option>
-                          <option>Inside</option>
-                          <option>Outside</option>
-                          <option>Wildcat</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label>Personality</label>
+                        <label>Email</label>
                         <br />
                         <input
-                          type='text'
-                          name='personality'
-                          value={this.state.cat.personality}
-                          onChange={this.handleChange.bind(this)}
-                        />
+                          name='email'
+                          value={this.state.user.email}
+                          onChange={this.handleChange.bind(this)}>
+                        </input>
                       </div>
 
                       <div>
-                        <label>Age</label>
+                        <label>Password</label>
                         <br />
                         <input
-                          type='number'
-                          name='age'
-                          value={this.state.cat.age}
+                          type='password'
+                          name='password'
+                          value={this.state.user.password}
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
@@ -150,4 +129,4 @@ class CatAdd extends Component {
     }
   }
 
-  export default CatAdd;
+  export default UserAdd;
